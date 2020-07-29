@@ -30,24 +30,38 @@ export default {
     },
     methods:{
         initForm(itemObj){
+            console.log(itemObj)
             this.formName=itemObj.name;
             itemObj.items.map((item)=>{
-                this.formModel[item.name]= data[item.name] || null;
-            })
+                console.log(item);
+                this.formModel[item.name]= null;
+            });
         },
         generateFormItem(itemObj){
-
+            let itemEle = [];
+            itemObj.items.map((item)=>{
+                switch (item.type) {
+                    case 'input':
+                        itemEle.push(
+                          <FormItem label={item.label}>
+                              <Input nativeOnClick = {()=>{console.log('123')}}/>
+                          </FormItem>
+                        )
+                }
+            })
+            return itemEle;
         }
     },
-    create(){
+    created(){
       this.initForm(this.formOption)
     },
     render(h){
         let ele = [];
+        console.log(this.formModel)
         ele = this.generateFormItem(this.formOption);
         return (
             <div>
-                <Form name={this.formName} model={this.formModel}>
+                <Form name={this.formName} onClick={()=>console.log(123)}>
                     {ele}
                 </Form>
             </div>
